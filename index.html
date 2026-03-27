@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>StemDetective</title>
+
+	<link rel="stylesheet" href="style.css">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+	<header class="main-header">
+		<div class="logo">StemDetective</div>
+
+		<nav class="mini-nav">
+			<a href="#over">Over</a>
+			<a href="faq.html">Veelgestelde vragen</a>
+		</nav>
+	</header>
+
+
+	<section class="hero">
+
+		<div class="hero-image">
+			<img src="fotos/vote.jpg" alt="Politiek analyse illustratie">
+		</div>
+
+		<div class="hero-content">
+
+			<h1>
+				Ben jij benieuwd of politieke partijen zich
+				<span>echt aan hun verkiezingsprogramma houden?</span>
+			</h1>
+
+			<p>
+				Analyseer hoe goed een partij haar beloften naleeft door
+				verkiezingsprogramma's te vergelijken met de nieuwste moties
+				uit de Tweede Kamer.
+			</p>
+
+
+			<div class="analyse-box">
+
+				<label>Kies een politieke partij</label>
+
+				<select id="SelectParty">
+					<option value="bbb">BBB</option>
+					<option value="cda">CDA</option>
+					<option value="cu">ChristenUnie</option>
+					<option value="d66">D66</option>
+					<option value="denk">DENK</option>
+					<option value="fvd">FVD</option>
+					<option value="glpvda">GL-PvdA</option>
+					<option value="ja21">JA21</option>
+					<option value="pvv">PVV</option>
+					<option value="pvdd">Partij voor de Dieren</option>
+					<option value="sgp">SGP</option>
+					<option value="sp">SP</option>
+					<option value="vvd">VVD</option>
+					<option value="volt">Volt</option>
+				</select>
+
+				<button id="analyseBtn">
+					Start Analyse
+				</button>
+
+				<div id="loading" style="display:none;" class="loader-container">
+					<div class="spinner"></div>
+					<p>Analyse wordt uitgevoerd... Dit kan enkele minuten duren.</p>
+				</div>
+
+			</div>
+
+		</div>
+	</section>
+
+
+	<section id="resultSection" class="result-section">
+
+    <div class="result-container">
+
+        <h2 id="partyName"></h2>
+
+        <div class="chart-container">
+            <canvas id="resultChart"></canvas>
+        </div>
+
+        <div id="conclusion" class="conclusion"></div>
+
+        <div id="topicsContainer" class="topics-container"></div>
+
+        <button id="newAnalysisBtn" class="new-analysis-btn">
+            Analyseer een nieuwe partij
+        </button>
+
+    </div>
+
+</section>
+
+
+
+	<section id="over" class="about">
+
+		<h2>Waarom hebben we StemDetective gemaakt?</h2>
+
+		<p>
+			In een democratie krijgen politieke partijen een mandaat van kiezers om hun
+			verkiezingsprogramma uit te voeren. Toch wordt vaak beweerd dat partijen hun
+			beloften niet nakomen zodra ze in de politiek zitten.
+		</p>
+
+		<p>
+			Met <strong>StemDetective</strong> wilden we deze discussie objectief maken.
+			Daarom vergelijken wij de standpunten uit verkiezingsprogramma's met de
+			meest recente moties uit de Tweede Kamer.
+		</p>
+
+		<ul>
+			<li>De meest recente verkiezingsprogramma's van alle partijen</li>
+			<li>Moties uit het officiële Tweede Kamer archief</li>
+			<li>Koppeling met de Tweede Kamer API</li>
+			<li>De nieuwste <strong>250 moties</strong></li>
+			<li>AI analyse van stemgedrag (automatisch systeem)</li>
+		</ul>
+
+	</section>
+
+
+	<footer>
+
+		<div class="footer-content">
+
+			<p class="footer-title">StemDetective</p>
+
+			<p>Transparantie in de politiek door data.</p>
+
+			<p class="footer-small">
+				Data: Verkiezingsprogramma's & Tweede Kamer moties
+			</p>
+
+		</div>
+
+	</footer>
+
+
+	<script src="script.js"></script>
+
+</body>
+</html>
