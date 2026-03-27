@@ -121,6 +121,12 @@ Tijdens het ophalen van data wordt een loader weergegeven:
 
 ---
 
+## Bron foto
+
+De foto van de voorpagina is afkomstig van **[Unsplash](https://unsplash.com/photos/a-person-is-casting-a-vote-into-a-box-T9CXBZLUvic)**
+
+---
+
 ## Auteur
 
 Gemaakt door:
