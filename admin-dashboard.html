@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Dashboard</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 20px; }
+#loginForm, #dashboard { max-width: 600px; margin: auto; }
+table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+td, th { border: 1px solid #ccc; padding: 8px; text-align: left; }
+button { padding: 5px 10px; margin-right: 5px; }
+#loginForm input { width: 100%; padding: 8px; margin-bottom: 10px; }
+#loading { display:none; font-weight:bold; margin-top:10px; }
+</style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Admin Dashboard</h2>
+
+<div id="loginForm">
+  <h3>Login</h3>
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Wachtwoord">
+  <button onclick="login()">Login</button>
+  <p id="loginError" style="color:red;"></p>
+</div>
+
+<div id="dashboard" style="display:none;">
+  <p>Ingelogd als <span id="userEmail"></span> | <button onclick="logout()">Logout</button></p>
+  <p id="loading">Laden...</p>
+  <table id="cacheTable">
+    <thead>
+      <tr><th>Partij</th><th>Cached Age (sec)</th><th>Acties</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+<script>
+// Firebase client config (veilig publiekelijk)
+const firebaseConfig = {
+  apiKey: "AIzaSyDItNR6xet2cPzfPzMwCbXEfPA1xtrjv5o",
+  authDomain: "stemdetective-9590d.firebaseapp.com",
+  projectId: "stemdetective-9590d",
+  storageBucket: "stemdetective-9590d.firebasestorage.app",
+  messagingSenderId: "29739822877",
+  appId: "1:29739822877:web:e86a5bed9681ba8fd8bbf4",
+  measurementId: "G-W2847JV3DJ"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+// login functie
+async function login(){
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const errorEl = document.getElementById("loginError");
+    errorEl.innerText = "";
+    try{
+        const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+        const idToken = await userCredential.user.getIdToken();
+        localStorage.setItem("firebase_token", idToken);
+        document.getElementById("loginForm").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+        document.getElementById("userEmail").innerText = email;
+        loadCache();
+    }catch(e){
+        console.error(e);
+        errorEl.innerText = "Login mislukt. Controleer email/wachtwoord.";
+    }
+}
+
+// logout functie
+function logout(){
+    firebase.auth().signOut();
+    localStorage.removeItem("firebase_token");
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("loginForm").style.display = "block";
+}
+
+// cache laden
+async function loadCache(){
+    const token = localStorage.getItem("firebase_token");
+    if(!token) return;
+    const loading = document.getElementById("loading");
+    loading.style.display = "block";
+
+    const res = await fetch("[link]/admin/cache", {
+        headers: { "Authorization": token }
+    });
+    const data = await res.json();
+    const tbody = document.querySelector("#cacheTable tbody");
+    tbody.innerHTML = "";
+    for(const [party, info] of Object.entries(data.cache)){
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${party}</td>
+            <td>${info.age_sec}</td>
+            <td>
+                <button onclick="clearCache('${party}')">Clear</button>
+                <button onclick="refreshCache('${party}')">Refresh</button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    }
+    loading.style.display = "none";
+}
+
+// cache clear
+async function clearCache(party){
+    const token = localStorage.getItem("firebase_token");
+    await fetch("[link]/admin/cache/clear", {
+        method:"POST",
+        headers: { "Authorization": token, "Content-Type":"application/x-www-form-urlencoded" },
+        body:`party_name=${party}`
+    });
+    loadCache();
+}
+
+// cache refresh
+async function refreshCache(party){
+    const token = localStorage.getItem("firebase_token");
+    await fetch("[link]/admin/cache/refresh", {
+        method:"POST",
+        headers: { "Authorization": token, "Content-Type":"application/x-www-form-urlencoded" },
+        body:`party_name=${party}`
+    });
+    loadCache();
+}
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+            .then(reg => console.log('Service Worker geregistreerd:', reg.scope))
+            .catch(err => console.error('Service Worker registratie mislukt:', err));
+    });
+}
+</script>
+
+</body>
+</html>
