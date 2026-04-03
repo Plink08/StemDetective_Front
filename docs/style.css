@@ -567,16 +567,12 @@ footer hr {
     background:#1e293b;
     padding:20px;
     border-radius:8px;
-    margin-bottom:20px;
+    margin: 15px;
 }
 
 .faq-container{
     max-width:800px;
     margin:60px auto;
-}
-
-.faq-item{
-    margin-bottom:15px;
 }
 
 .faq-question{
