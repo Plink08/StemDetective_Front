@@ -250,3 +250,114 @@ if ('serviceWorker' in navigator) {
             .catch(err => console.error('Service Worker registratie mislukt:', err));
     });
 }
+
+
+/* -------------------------
+   EXTRA: INTERACTIEVE LOADER
+--------------------------*/
+document.addEventListener("DOMContentLoaded", function() {
+
+    // 1. Initialiseer Tom Select met logo functionaliteit
+    new TomSelect("#SelectParty",{
+        create: false,
+        sortField: { field: "text", direction: "asc" },
+        render: {
+            // Deze functie bepaalt hoe de opties in het dropdown menu eruit zien
+            option: function(data, escape) {
+                let logoHtml = data.logo ? `<img class="party-logo-select" src="${escape(data.logo)}" alt="${escape(data.text)} logo">` : '';
+                return `<div>${logoHtml} <span>${escape(data.text)}</span></div>`;
+            },
+            // Deze functie bepaalt hoe het geselecteerde item eruit ziet
+            item: function(data, escape) {
+                let logoHtml = data.logo ? `<img class="party-logo-select" style="margin-right:8px; vertical-align:middle;" src="${escape(data.logo)}" alt="${escape(data.text)} logo">` : '';
+                return `<div>${logoHtml} ${escape(data.text)}</div>`;
+            }
+        }
+    });
+
+    // 2. Elementen ophalen
+    const analyseBtn = document.getElementById('analyseBtn');
+    const loadingDiv = document.getElementById('loading');
+    const selectBox = document.getElementById('SelectParty');
+    const resultSection = document.getElementById('resultSection');
+    
+    // Elementen voor de interactieve loader
+    const loadingStepText = document.getElementById('loadingStep');
+    const progressBar = document.getElementById('progressBar');
+    const loadingFactText = document.getElementById('loadingFact');
+
+    // Feitjes array
+    const politiekeFeitjes = [
+        "De Tweede Kamer telt 150 zetels, terwijl de Eerste Kamer er 75 heeft.",
+        "In 1917 kregen mannen kiesrecht, en in 1919 kregen vrouwen dat ook.",
+        "Het woord 'motie' betekent een formeel voorstel aan de Kamer om een uitspraak te doen.",
+        "De langstzittende premier van Nederland was Mark Rutte.",
+        "Het Binnenhof in Den Haag is het oudste parlementsgebouw ter wereld dat nog in gebruik is.",
+        "Wetten moeten altijd goedgekeurd worden door zowel de Tweede als de Eerste Kamer."
+    ];
+
+    // 3. Analyse knop logica
+    analyseBtn.addEventListener('click', function() {
+        if (!selectBox.value) {
+            alert("Selecteer eerst een partij!");
+            return;
+        }
+
+        // Verberg knop, toon lader
+        analyseBtn.style.display = "none";
+        loadingDiv.style.display = "block";
+        resultSection.hidden = true; 
+        resultSection.classList.remove('show');
+
+        // Reset loader status
+        progressBar.style.width = "0%";
+        
+        // Start feitjes carrousel
+        let factIndex = 0;
+        const factInterval = setInterval(() => {
+            factIndex = (factIndex + 1) % politiekeFeitjes.length;
+            loadingFactText.innerText = politiekeFeitjes[factIndex];
+        }, 4000); // Wissel elke 4 seconden
+
+        // Simuleer de voortgang van de API en AI (hier komt in de toekomst je echte API call)
+        setTimeout(() => {
+            loadingStepText.innerText = "Verkiezingsprogramma ophalen...";
+            progressBar.style.width = "25%";
+        }, 1000);
+
+        setTimeout(() => {
+            loadingStepText.innerText = "Laatste 250 moties scannen...";
+            progressBar.style.width = "50%";
+        }, 3000);
+
+        setTimeout(() => {
+            loadingStepText.innerText = "AI analyseert stemgedrag...";
+            progressBar.style.width = "75%";
+        }, 6000);
+
+        setTimeout(() => {
+            loadingStepText.innerText = "Conclusie genereren...";
+            progressBar.style.width = "100%";
+        }, 8000);
+
+        // Afronden na 9 seconden (Simulatie eindigt)
+        setTimeout(() => {
+            clearInterval(factInterval); // Stop de feitjes
+            
+            // Verberg loader, toon resultaat en reset knop
+            loadingDiv.style.display = "none";
+            analyseBtn.style.display = "block";
+            
+            // Toon de resultaatsectie
+            resultSection.hidden = false;
+            resultSection.classList.add('show');
+            
+            // Update hieronder de DOM elementen met je echte resultaten
+            document.getElementById('partyName').innerText = `Resultaat voor: ${selectBox.options[selectBox.selectedIndex].text}`;
+            
+            // Tip: Roep hier je Chart.js functie aan
+            
+        }, 9000); 
+    });
+
+});
