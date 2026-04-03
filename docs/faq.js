@@ -1,25 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const questions = document.querySelectorAll(".faq-question");
 
-	const questions = document.querySelectorAll(".faq-question");
-
-	questions.forEach(question => {
-
-		question.addEventListener("click", () => {
-
-			question.classList.toggle("active");
-
-			const answer = question.nextElementSibling;
-
-			if (answer.style.display === "block") {
-				answer.style.display = "none";
-			} else {
-				answer.style.display = "block";
-			}
-
-		});
-
-	});
-
+    questions.forEach(question => {
+        question.addEventListener("click", () => {
+            // Zorg dat de pijl animeert of van kleur verandert
+            question.classList.toggle("active");
+            
+            // Haal het antwoord op
+            const answer = question.nextElementSibling;
+            
+            // Toggle een CSS class in plaats van style.display
+            answer.classList.toggle("show");
+        });
+    });
 });
 
 // Service Worker
