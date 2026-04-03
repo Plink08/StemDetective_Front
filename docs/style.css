@@ -414,6 +414,12 @@ footer hr {
     color: var(--text-main) !important;
 }
 
+.ts-control > * {
+    vertical-align: baseline;
+    display: inline-block;
+    color: #ffffff
+}
+
 .full .ts-control {
     background-color: #334155;
     
