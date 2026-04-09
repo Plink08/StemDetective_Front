@@ -93,7 +93,7 @@ async function loadCache(){
     const loading = document.getElementById("loading");
     loading.style.display = "block";
 
-    const res = await fetch("[link]/admin/cache", {
+    const res = await fetch("https://stemdetective.onrender.com/admin/cache", {
         headers: { "Authorization": token }
     });
     const data = await res.json();
@@ -117,7 +117,7 @@ async function loadCache(){
 // cache clear
 async function clearCache(party){
     const token = localStorage.getItem("firebase_token");
-    await fetch("[link]/admin/cache/clear", {
+    await fetch("https://stemdetective.onrender.com/admin/cache/clear", {
         method:"POST",
         headers: { "Authorization": token, "Content-Type":"application/x-www-form-urlencoded" },
         body:`party_name=${party}`
@@ -128,7 +128,7 @@ async function clearCache(party){
 // cache refresh
 async function refreshCache(party){
     const token = localStorage.getItem("firebase_token");
-    await fetch("[link]/admin/cache/refresh", {
+    await fetch("https://stemdetective.onrender.com/admin/cache/refresh", {
         method:"POST",
         headers: { "Authorization": token, "Content-Type":"application/x-www-form-urlencoded" },
         body:`party_name=${party}`

@@ -19,9 +19,9 @@
 <body>
 
     <header class="main-header">
-        <div class="container"> <a href="/StemDetective_Front" class="logo">StemDetective</a>
+        <div class="container"> <a href="index.html" class="logo">StemDetective</a>
             <nav class="mini-nav">
-                <a href="#over">Over ons</a>
+                <a href="overons.html">Over ons</a>
                 <a href="faq.html">FAQ</a>
             </nav>
         </div>
@@ -89,6 +89,30 @@
             </div>
         </section>
 
+        <section class="ads-section">
+            <div class="ad-container">
+                <div class="about-grid">
+                    <div class="ad-placeholder">
+                        <small>Advertentie</small>
+                        <div class="ad-box">
+                            <p>Jouw banner hier?</p>
+                            <a href="mailto:info@stemdetective.nl" class="btn-spons">Contact</a>
+                        </div>
+                    </div>
+                    <div class="ad-placeholder">
+                        <small>Support StemDetective</small>
+                        <div class="ad-box">
+                            <p>Help ons onafhankelijk te blijven.</p>
+                            <a href="https://buymeacoffee.com/stemdetective" target="_blank" class="btn-bmc">
+                                <img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="Buy me a coffee icon">
+                                <span>Buy me a coffee</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="over" class="about">
             <div class="container">
                 <h2>Waarom StemDetective?</h2>
@@ -108,16 +132,38 @@
                 </div>
             </div>
         </section>
+
     </main>
 
-    <footer>
-        <div class="footer-content">
-            <p class="footer-title">StemDetective</p>
-            <p>Transparantie in de politiek door data.</p>
-            <hr>
-            <p class="footer-small">© 2024 StemDetective - Data: Tweede Kamer der Staten-Generaal</p>
+    <footer class="main-footer">
+        <div class="container footer-container">
+            <div class="footer-info">
+                <h3>StemDetective</h3>
+                <p>Transparantie in de politiek door data. Wij analyseren stemgedrag en partijprogramma's met behulp van AI.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Handige Links</h4>
+                <ul>
+                    <li><a href="faq.html">Veelgestelde Vragen (FAQ)</a></li>
+                    <li><a href="disclaimer.html">Disclaimer & Privacy</a></li>
+                    <li><a href="overons.html">Over ons</a></li>
+                </ul>
+            </div>
+            <div class="footer-info">
+                <p>&copy; 2026 StemDetective. Data: Tweede Kamer der Staten-Generaal. Onafhankelijk en experimenteel.</p>
+            </div>
         </div>
     </footer>
+
+    <div id="cookieBanner" class="cookie-banner">
+        <div class="cookie-content">
+            <div class="cookie-text">
+                <strong>🍪 Privacy & Cookies</strong>
+                <p>StemDetective verzamelt geen persoonlijke data. We gebruiken alleen functionele lokale opslag om deze melding te verbergen nadat je hem hebt weggeklikt. Wel zo transparant!</p>
+            </div>
+            <button id="acceptCookiesBtn" class="btn-primary">Begrepen</button>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

@@ -32,11 +32,14 @@ async function analyse(){
         // 🔥 toon loader meteen
         loading.style.display = "block";
 
+        console.log("Request word verzonden...")
+
         const response = await fetch(
-        `[link]/analyse/${party}` // link nog invullen zodra server draait
+        `https://stemdetective.onrender.com/analyse/${party}` // link nog invullen zodra server draait
         );
 
         if (!response.ok){
+            console.log("API response niet ok:", response.status);
             throw new Error(`HTTP fout: ${response.status}`);
         }
 
@@ -455,3 +458,42 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 });
+
+// =========================
+// COOKIE BANNER LOGICA
+// =========================
+const cookieBanner = document.getElementById('cookieBanner');
+const acceptBtn = document.getElementById('acceptCookiesBtn');
+
+// Check of de cookie al is geaccepteerd in de lokale opslag
+if (!localStorage.getItem('cookiesGeaccepteerd')) {
+    // Zo niet, laat de banner zien (met een kleine vertraging voor een soepele animatie)
+    setTimeout(() => {
+        cookieBanner.style.display = 'block';
+        // Forceer een reflow zodat de CSS transitie werkt
+        setTimeout(() => cookieBanner.classList.add('show'), 10);
+    }, 1000); // Banner verschijnt na 1 seconde
+}
+
+// Wat te doen als iemand op 'Begrepen' klikt
+acceptBtn.addEventListener('click', function() {
+    // Sla de keuze op
+    localStorage.setItem('cookiesGeaccepteerd', 'true');
+    
+    // Schuif de banner naar beneden
+    cookieBanner.classList.remove('show');
+    
+    // Verwijder de banner volledig uit de DOM na de animatie
+    setTimeout(() => {
+        cookieBanner.style.display = 'none';
+    }, 400);
+});
+
+// Optioneel: Laat een alert zien als ze op "Privacy & Cookies" in de footer klikken
+const privacyLink = document.getElementById('privacyLink');
+if(privacyLink) {
+    privacyLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        alert("Privacyverklaring:\n\nWij slaan geen persoonlijke gegevens op. De analyses worden anoniem uitgevoerd. Enige data die op je apparaat wordt opgeslagen is een 'vlaggetje' om te onthouden dat je deze melding hebt gezien.");
+    });
+}
